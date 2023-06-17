@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Button, Image, View, Platform, TouchableOpacity, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 const welcome_image = require('../assets/welcome_image.png')
 
 function Pick(prop) {
-    const [image, setImage] = useState(null);
-
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -16,7 +15,29 @@ function Pick(prop) {
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            const formData = new FormData();
+            formData.append('image', {
+                uri: result.assets[0].uri,
+                type: 'image/jpeg',
+                name: 'my_image.jpg',
+            });
+
+            try {
+                const response = await axios.post(
+                    'http://10.0.2.2:5000/',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    }
+                );
+                console.log(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            alert("Vui lòng chọn ảnh món ăn!")
         }
     };
 
@@ -35,7 +56,6 @@ function Pick(prop) {
                 <TouchableOpacity style={styles.button} onPress={pickImage}>
                     <Text style={{ color: 'white' }}>Chọn Ảnh - Đồ Ăn Cần Nhận Dạng</Text>
                 </TouchableOpacity>
-                {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
             </View>
         </View>
     );
