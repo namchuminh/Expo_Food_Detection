@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Button, Image, View, Platform, TouchableOpacity, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 const welcome_image = require('../assets/welcome_image.png')
 
-function Pick(prop) {
+function Pick({ navigation }) {
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -32,7 +32,12 @@ function Pick(prop) {
                         },
                     }
                 );
-                console.log(response.data);
+                navigation.navigate('Result', {
+                    confidence: response.data.confidence,
+                    description: response.data.description,
+                    food_name: response.data.food_name,
+                    image_path: response.data.image_path
+                });
             } catch (error) {
                 console.log(error);
             }
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f2f2f2'
     },
     top: {
-        flex: 40,
+        flex: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     bottom: {
-        flex: 30
+        flex: 20
     },
     button: {
         alignItems: 'center',
