@@ -3,7 +3,10 @@ import { StyleSheet, Image, View, TouchableOpacity, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Constants from 'expo-constants';
+
 const welcome_image = require('../assets/welcome_image.png')
+const API_URL = Constants.manifest.env.API_URL
 
 function Pick({ navigation }) {
     const [isLoading, setIsLoading] = React.useState(false)
@@ -26,7 +29,7 @@ function Pick({ navigation }) {
                 name: 'my_image.jpg',
             });
             axios.post(
-                'http://10.0.2.2:5000/',
+                API_URL,
                 formData,
                 {
                     headers: {

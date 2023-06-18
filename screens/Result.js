@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Constants from 'expo-constants';
+
+const API_URL = Constants.manifest.env.API_URL
 
 function Result({ route }) {
     var { confidence, description, food_name, image_path } = route.params;
@@ -63,7 +66,7 @@ function Result({ route }) {
                 name: 'my_image.jpg',
             });
             axios.post(
-                'http://10.0.2.2:5000/',
+                API_URL,
                 formData,
                 {
                     headers: {
@@ -93,7 +96,7 @@ function Result({ route }) {
                 <>
                     <View style={{ flex: 40, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ marginVertical: layout.width < 375 ? 10 : 20, width: layout.width < 375 ? 110 : 160, height: layout.width < 375 ? 110 : 160, borderColor: 'white', borderWidth: 5, borderRadius: 10 }}>
-                            <Image source={{ uri: "http://10.0.2.2:5000" + image_path }} style={{ width: '100%', height: '100%' }} />
+                            <Image source={{ uri: API_URL + image_path }} style={{ width: '100%', height: '100%' }} />
                         </View>
                         <View style={{ alignItems: 'center' }}>
                             <Text style={{ fontWeight: 'bold', fontSize: layout.width < 375 ? 16 : 22 }}>{food_name}</Text>
@@ -108,8 +111,8 @@ function Result({ route }) {
                         />
                     </View>
                     <View style={{ position: 'absolute', bottom: -40, right: 10, alignItems: 'center', transform: [{ translateY: -50 }] }}>
-                        <TouchableOpacity onPress={pickImage} style={{ padding: 3, borderColor: "#f2f2f2", borderWidth: 1, borderRadius: 50, backgroundColor: "#f2f2f2" }}>
-                            <Icon name="add-a-photo" size={35} color="#2293f4" />
+                        <TouchableOpacity onPress={pickImage} style={{ width: layout.width < 375 ? 50 : 65 , height: layout.width < 375 ? 50 : 65, padding: 3, borderColor: "#f2f2f2", borderWidth: layout.width < 375 ? 2 : 5, borderRadius: 50, backgroundColor: "#f2f2f2" }}>
+                            <Icon name="add-a-photo" size={layout.width < 375 ? 35 : 45} color="#2293f4" />
                         </TouchableOpacity>
                     </View>
                 </>
