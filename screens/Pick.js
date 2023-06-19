@@ -43,7 +43,8 @@ function Pick({ navigation }) {
                     confidence: response.data.confidence,
                     description: response.data.description,
                     food_name: response.data.food_name,
-                    image_path: response.data.image_path
+                    image_path: response.data.image_path,
+                    cook: response.data.cook
                 });
             })
             .catch((error) => {

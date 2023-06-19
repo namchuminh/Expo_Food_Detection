@@ -2,7 +2,7 @@
   "expo": {
     "name": "Expo_Food_Detection",
     "env": {
-      "API_URL": "https://faab-2405-4802-1c6e-ccc0-58b9-6ec4-a779-2f91.ngrok-free.app/"
+      "API_URL": "http://10.0.2.2:5000/"
     },
     "slug": "Expo_Food_Detection",
     "version": "1.0.0",
@@ -28,6 +28,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Cho phép ứng dụng truy cập camera?"
+        }
+      ]
+    ]
   }
 }
